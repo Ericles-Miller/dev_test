@@ -1,7 +1,7 @@
-import { Repository } from "typeorm";
-import { Post } from "../entity/Post";
-import { AppDataSource } from "../database";
-import { CreatePostDto } from "../DTOs/CreatePostDto";
+import { Repository } from 'typeorm';
+import { Post } from '../entity/Post';
+import { AppDataSource } from '../database';
+import { CreatePostDto } from '../DTOs/CreatePostDto';
 
 
 export class PostUseCase {

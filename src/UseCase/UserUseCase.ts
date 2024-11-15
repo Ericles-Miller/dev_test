@@ -1,7 +1,7 @@
-import { Repository } from "typeorm";
-import { AppDataSource } from "../database";
-import { User } from "../entity/User";
-import { CreateUserDto } from "../DTOs/CreateUserDto";
+import { Repository } from 'typeorm';
+import { AppDataSource } from '../database';
+import { User } from '../entity/User';
+import { CreateUserDto } from '../DTOs/CreateUserDto';
 
 
 export class UserUseCase { 

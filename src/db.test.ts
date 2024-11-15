@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const testUser = {
-  firstName: "John",
-  lastName: "Doe",
-  email: "john.doe@example.com"
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'john.doe@example.com'
 };
 
 
@@ -20,8 +20,8 @@ async function testCreateUser() {
 }
 
 const testPost = {
-  title: "Some message",
-  description: "Some description",
+  title: 'Some message',
+  description: 'Some description',
   userId: null as number | null
 };
 
