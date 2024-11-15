@@ -14,6 +14,6 @@ export class PostUseCase {
   async execute({ description, title, userId } : CreatePostDto) : Promise<Post> {
     const post = new Post(title, description, userId);
 
-    return await AppDataSource.getRepository(Post).save(post)
+    return await this.repository.save(post)
   }
 }
