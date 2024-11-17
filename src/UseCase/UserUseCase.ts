@@ -5,6 +5,7 @@ import { CreateUserDto } from '../DTOs/CreateUserDto';
 import { AppError } from '../AppError';
 import { error } from 'console';
 import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
 
 
 export class UserUseCase { 
@@ -18,12 +19,17 @@ export class UserUseCase {
    try {
 
     const userDto = plainToClass(CreateUserDto, { firstName, lastName, email });
-    if(userDto) throw new AppError('Invalid data.', 400);
+    const errors = await validate(userDto);
+    if (errors.length > 0) {
+      const messages = errors.map((err) => Object.values(err.constraints || {}).join(', ')).join('; ');
+      throw new AppError(`Validation failed: ${messages}`, 400);
+    }
 
-    const user = new User(firstName, lastName, email);
-    
+    const user = new User(firstName, lastName, email);    
     return await this.repository.save(user);
-   } catch {
+   } catch (error) {
+    if(error instanceof AppError) throw error;
+
     throw new AppError('Unexpected server error to create a new user', 500);
    }
   }

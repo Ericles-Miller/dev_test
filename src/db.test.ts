@@ -6,7 +6,6 @@ const testUser = {
   email: 'john.doe@example.com'
 };
 
-
 let userId: number | null = null;
 
 async function testCreateUser() {
@@ -14,8 +13,8 @@ async function testCreateUser() {
     const response = await axios.post('http://localhost:3000/users', testUser);
     userId = response.data.id;
     console.log('User created successfully:', response.data);
-  } catch (error) {
-    console.error('Error creating user:', error);
+  } catch (error: any) {
+    console.error('Error creating user:', error.response?.data || error.message);
   }
 }
 
@@ -26,14 +25,18 @@ const testPost = {
 };
 
 async function testCreatePost() {
+  if (!userId) {
+    console.error('Cannot create post: userId is null.');
+    return;
+  }
 
   testPost.userId = userId;
 
   try {
     const response = await axios.post('http://localhost:3000/posts', testPost);
     console.log('Post created successfully:', response.data);
-  } catch (error) {
-    console.error('Error creating post:', error);
+  } catch (error: any) {
+    console.error('Error creating post:', error.response?.data || error.message);
   }
 }
 

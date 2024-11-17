@@ -5,6 +5,7 @@ import { CreatePostDto } from '../DTOs/CreatePostDto';
 import { User } from '../entity/User';
 import { AppError } from '../AppError';
 import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
 
 
 export class PostUseCase {
@@ -20,7 +21,11 @@ export class PostUseCase {
     try {
 
       const userDto = plainToClass(CreatePostDto, { description, title, userId });
-      if(userDto) throw new AppError('Invalid data.', 400);
+      const errors = await validate(userDto);
+      if (errors.length > 0) {
+        const messages = errors.map((err) => Object.values(err.constraints || {}).join(', ')).join('; ');
+        throw new AppError(`Validation failed: ${messages}`, 400);
+      }
 
       const userExists = await this.userRepository.findOne({where: {id: userId}});
       if(!userExists) throw new AppError('UserId does not exists', 404);

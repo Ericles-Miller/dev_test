@@ -11,7 +11,6 @@ export class CreatePostDto {
   @MaxLength(85)
   description!: string;
 
-  @IsNotEmpty()
   @IsNumber()
   userId!: number
 }
